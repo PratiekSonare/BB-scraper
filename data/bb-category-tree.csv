@@ -1,0 +1,122 @@
+category_name,subcategory_name,category_slug,subcategory_slug
+Electronics,Audio devices,electronics,audio-devices
+Electronics,Beauty & Grooming,electronics,beauty-grooming
+Electronics,Cameras & Accessories,electronics,cameras-accessories
+Electronics,Electrical Accessories,electronics,electrical-accessories
+Electronics,Home & Kitchen Appliance,electronics,home-kitchen-appliance
+Electronics,Home Appliances,electronics,home-appliances
+Electronics,Kitchen Appliances,electronics,kitchen-appliances
+Electronics,Phone & Laptop Accessory,electronics,phone-laptop-accessory
+Electronics,"Phone, Laptop & Tablets",electronics,phone-laptop-tablets
+Electronics,Smart Wearables,electronics,smart-wearables
+Fashion,Fashion Essentials,fashion,fashion-essentials
+Fashion,Footwear,fashion,footwear
+Fashion,Kids Apparel,fashion,kids-apparel
+Fashion,Men's Apparel,fashion,mens-apparel
+Fashion,Travel,fashion,travel
+Fashion,Women's Apparel,fashion,womens-apparel
+Apparel,Men's Apparel,apparel,mens-apparel
+Apparel,Women's Apparel,apparel,womens-apparel
+Food Court,Burgers & Sandwiches,food-court,burgers-sandwiches
+Food Court,Cake & Pastry Delights,food-court,cake-pastry-delights
+Food Court,Cold Beverages,food-court,cold-beverages
+Food Court,Hot Beverages,food-court,hot-beverages
+Food Court,Rolls & Wraps,food-court,rolls-wraps
+Food Court,Snack Time,food-court,snack-time
+Fruits & Vegetables,Cuts & Sprouts,fruits-vegetables,cuts-sprouts
+Fruits & Vegetables,Exotic Fruits & Veggies,fruits-vegetables,exotic-fruits-veggies
+Fruits & Vegetables,"Flower Bouquets, Bunches",fruits-vegetables,flower-bouquets-bunches
+Fruits & Vegetables,Fresh Fruits,fruits-vegetables,fresh-fruits
+Fruits & Vegetables,Fresh Vegetables,fruits-vegetables,fresh-vegetables
+Fruits & Vegetables,Herbs & Seasonings,fruits-vegetables,herbs-seasonings
+Fruits & Vegetables,Organic Fruits & Vegetables,fruits-vegetables,organic-fruits-vegetables
+"Foodgrains, Oil & Masala","Atta, Flours & Sooji",foodgrains-oil-masala,atta-flours-sooji
+"Foodgrains, Oil & Masala",Dals & Pulses,foodgrains-oil-masala,dals-pulses
+"Foodgrains, Oil & Masala",Dry Fruits,foodgrains-oil-masala,dry-fruits
+"Foodgrains, Oil & Masala",Edible Oils & Ghee,foodgrains-oil-masala,edible-oils-ghee
+"Foodgrains, Oil & Masala",Masalas & Spices,foodgrains-oil-masala,masalas-spices
+"Foodgrains, Oil & Masala",Organic Staples,foodgrains-oil-masala,organic-staples
+"Foodgrains, Oil & Masala",Rice & Rice Products,foodgrains-oil-masala,rice-rice-products
+"Foodgrains, Oil & Masala","Salt, Sugar & Jaggery",foodgrains-oil-masala,salt-sugar-jaggery
+"Bakery, Cakes & Dairy",Bakery Snacks,bakery-cakes-dairy,bakery-snacks
+"Bakery, Cakes & Dairy",Breads & Buns,bakery-cakes-dairy,breads-buns
+"Bakery, Cakes & Dairy",Cakes & Pastries,bakery-cakes-dairy,cakes-pastries
+"Bakery, Cakes & Dairy","Cookies, Rusk & Khari",bakery-cakes-dairy,cookies-rusk-khari
+"Bakery, Cakes & Dairy",Dairy,bakery-cakes-dairy,dairy
+"Bakery, Cakes & Dairy",Gourmet Breads,bakery-cakes-dairy,gourmet-breads
+"Bakery, Cakes & Dairy",Ice Creams & Desserts,bakery-cakes-dairy,ice-creams-desserts
+"Bakery, Cakes & Dairy",Non Dairy,bakery-cakes-dairy,non-dairy
+Beverages,Coffee,beverages,coffee
+Beverages,Energy & Soft Drinks,beverages,energy-soft-drinks
+Beverages,Fruit Juices & Drinks,beverages,fruit-juices-drinks
+Beverages,"Health Drink, Supplement",beverages,health-drink-supplement
+Beverages,Tea,beverages,tea
+Beverages,Water,beverages,water
+Snacks & Branded Foods,Biscuits & Cookies,snacks-branded-foods,biscuits-cookies
+Snacks & Branded Foods,Breakfast Cereals,snacks-branded-foods,breakfast-cereals
+Snacks & Branded Foods,Chocolates & Candies,snacks-branded-foods,chocolates-candies
+Snacks & Branded Foods,Frozen Veggies & Snacks,snacks-branded-foods,frozen-veggies-snacks
+Snacks & Branded Foods,Indian Mithai,snacks-branded-foods,indian-mithai
+Snacks & Branded Foods,"Noodle, Pasta, Vermicelli",snacks-branded-foods,noodle-pasta-vermicelli
+Snacks & Branded Foods,Pickles & Chutney,snacks-branded-foods,pickles-chutney
+Snacks & Branded Foods,Ready To Cook & Eat,snacks-branded-foods,ready-to-cook-eat
+Snacks & Branded Foods,Snacks & Namkeen,snacks-branded-foods,snacks-namkeen
+Snacks & Branded Foods,"Spreads, Sauces, Ketchup",snacks-branded-foods,spreads-sauces-ketchup
+Beauty & Hygiene,Bath & Hand Wash,beauty-hygiene,bath-hand-wash
+Beauty & Hygiene,Feminine Hygiene,beauty-hygiene,feminine-hygiene
+Beauty & Hygiene,Fragrances & Deos,beauty-hygiene,fragrances-deos
+Beauty & Hygiene,Hair Care,beauty-hygiene,hair-care
+Beauty & Hygiene,Health & Medicine,beauty-hygiene,health-medicine
+Beauty & Hygiene,Makeup,beauty-hygiene,makeup
+Beauty & Hygiene,Men's Grooming,beauty-hygiene,mens-grooming
+Beauty & Hygiene,Oral Care,beauty-hygiene,oral-care
+Beauty & Hygiene,Sexual Wellness,beauty-hygiene,sexual-wellness
+Beauty & Hygiene,Skin Care,beauty-hygiene,skin-care
+Cleaning & Household,All Purpose Cleaners,cleaning-household,all-purpose-cleaners
+Cleaning & Household,Bins & Bathroom Ware,cleaning-household,bins-bathroom-ware
+Cleaning & Household,Car & Shoe Care,cleaning-household,car-shoe-care
+Cleaning & Household,Detergents & Dishwash,cleaning-household,detergents-dishwash
+Cleaning & Household,"Disposables, Garbage Bag",cleaning-household,disposables-garbage-bag
+Cleaning & Household,Fresheners & Repellents,cleaning-household,fresheners-repellents
+Cleaning & Household,"Mops, Brushes & Scrubs",cleaning-household,mops-brushes-scrubs
+Cleaning & Household,Party & Festive Needs,cleaning-household,party-festive-needs
+Cleaning & Household,Pooja Needs,cleaning-household,pooja-needs
+Cleaning & Household,Sports & Fitness,cleaning-household,sports-fitness
+Cleaning & Household,Stationery,cleaning-household,stationery
+Cleaning & Household,Toys & Games,cleaning-household,toys-games
+"Kitchen, Garden & Pets",Appliances & Electricals,kitchen-garden-pets,appliances-electricals
+"Kitchen, Garden & Pets",Bakeware,kitchen-garden-pets,bakeware
+"Kitchen, Garden & Pets",Cookware & Non Stick,kitchen-garden-pets,cookware-non-stick
+"Kitchen, Garden & Pets",Crockery & Cutlery,kitchen-garden-pets,crockery-cutlery
+"Kitchen, Garden & Pets",Electronics & Devices ,kitchen-garden-pets,electronics-devices
+"Kitchen, Garden & Pets",Flask & Casserole,kitchen-garden-pets,flask-casserole
+"Kitchen, Garden & Pets",Gardening,kitchen-garden-pets,gardening
+"Kitchen, Garden & Pets",Home Furnishing,kitchen-garden-pets,home-furnishing
+"Kitchen, Garden & Pets",Kitchen Accessories,kitchen-garden-pets,kitchen-accessories
+"Kitchen, Garden & Pets",Pet Food & Accessories,kitchen-garden-pets,pet-food-accessories
+"Kitchen, Garden & Pets",Steel Utensils,kitchen-garden-pets,steel-utensils
+"Kitchen, Garden & Pets",Storage & Accessories,kitchen-garden-pets,storage-accessories
+"Eggs, Meat & Fish",Eggs,eggs-meat-fish,eggs
+"Eggs, Meat & Fish",Fish & Seafood,eggs-meat-fish,fish-seafood
+"Eggs, Meat & Fish",Marinades,eggs-meat-fish,marinades
+"Eggs, Meat & Fish",Mutton & Lamb,eggs-meat-fish,mutton-lamb
+"Eggs, Meat & Fish",Pork & Other Meats,eggs-meat-fish,pork-other-meats
+"Eggs, Meat & Fish",Poultry,eggs-meat-fish,poultry
+"Eggs, Meat & Fish","Sausages, Bacon & Salami",eggs-meat-fish,sausages-bacon-salami
+Gourmet & World Food,Cereals & Breakfast,gourmet-world-food,cereals-breakfast
+Gourmet & World Food,Chocolates & Biscuits,gourmet-world-food,chocolates-biscuits
+Gourmet & World Food,Cooking & Baking Needs,gourmet-world-food,cooking-baking-needs
+Gourmet & World Food,Dairy & Cheese,gourmet-world-food,dairy-cheese
+Gourmet & World Food,Drinks & Beverages,gourmet-world-food,drinks-beverages
+Gourmet & World Food,Oils & Vinegar,gourmet-world-food,oils-vinegar
+Gourmet & World Food,"Pasta, Soup & Noodles",gourmet-world-food,pasta-soup-noodles
+Gourmet & World Food,"Sauces, Spreads & Dips",gourmet-world-food,sauces-spreads-dips
+Gourmet & World Food,"Snacks, Dry Fruits, Nuts",gourmet-world-food,snacks-dry-fruits-nuts
+Gourmet & World Food,Tinned & Processed Food,gourmet-world-food,tinned-processed-food
+Baby Care,Baby Accessories,baby-care,baby-accessories
+Baby Care,Baby Bath & Hygiene,baby-care,baby-bath-hygiene
+Baby Care,Baby Food & Formula,baby-care,baby-food-formula
+Baby Care,Diapers & Wipes,baby-care,diapers-wipes
+Baby Care,Feeding & Nursing,baby-care,feeding-nursing
+Baby Care,Mothers & Maternity,baby-care,mothers-maternity
+Paan Corner,Smoking Supplies,paan-corner,smoking-supplies
