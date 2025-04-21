@@ -17,14 +17,30 @@ load_dotenv()
 
 base_url = "https://www.bigbasket.com/listing-svc/v2/products?type=pc&slug={slug}&page={page}"
 
-# Add this import at the top of your scraper.py
-from pymongo import MongoClient
+import dropbox
+from dropbox.exceptions import ApiError
+import os
 
-# MongoDB connection setup
-mongo_client = MongoClient(os.getenv("MONGO_URI"))
-db = mongo_client[os.getenv("MONGODB_NAME")]
-collection = db[os.getenv("MONGOCOL_NAME")]
+# Replace with your own credentials
+APP_KEY = os.getenv("APP_KEY")
+APP_SECRET = os.getenv("APP_SECRET")
+ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
 
+# Initialize Dropbox client
+dbx = dropbox.Dropbox(ACCESS_TOKEN)
+
+# Function to upload a file to Dropbox
+def upload_file(file_path, dropbox_path):
+    with open(file_path, 'rb') as f:
+        try:
+            dbx.files_upload(f.read(), dropbox_path, mode=dropbox.files.WriteMode.overwrite)
+            print(f"File uploaded to {dropbox_path}")
+        except dropbox.exceptions.ApiError as e:
+            if e.error.is_path_conflict():
+                print(f"Conflict occurred: {e}")
+            else:
+                print(f"Error occurred: {e}")
+                
 def setup_logger(socketio=None):
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
@@ -73,11 +89,32 @@ def decode_response(response):
         logging.error("Decoding error: %s", e)
         return response.text
 
-def process_csv(file_path):
-    df = pd.read_csv(file_path)
+def upload_file_from_memory(file_buffer, dropbox_path, dbx):
+    try:
+        file_buffer.seek(0)  # Make sure to move the buffer pointer to the beginning
+        dbx.files_upload(file_buffer.getvalue().encode('utf-8'), dropbox_path, mode=dropbox.files.WriteMode.overwrite)
+        logging.info(f"File uploaded to {dropbox_path}")
+    except dropbox.exceptions.ApiError as e:
+        logging.error(f"Error uploading file to Dropbox: {e}")
+        
+
+# Function to process the data
+def process_and_upload_data(extracted_data, category_slug, subcategory_slug, page, dbx):
+    # Create an in-memory buffer to hold the CSV data
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow([
+        'parent_id', 'child_id', 'name', 'weight', 'mrp', 
+        'discount_text', 'imageURL', 'category_slug'
+    ])
+    writer.writerows(extracted_data)
+
+    # Process the data using pandas
+    df = pd.read_csv(io.StringIO(output.getvalue()))
     df['hsn'] = df.apply(lambda row: row['child_id'] if pd.notna(row['child_id']) else row['parent_id'], axis=1)
     df['hsn'] = df['hsn'].astype('Int64')
 
+    # Extract discount logic
     def extract_discount(discount_text):
         if pd.isna(discount_text): return 0
         if '%' in discount_text: return int(discount_text.split('%')[0])
@@ -87,6 +124,7 @@ def process_csv(file_path):
     df['price'] = df['mrp']
     df['discount'] = df['discount_text'].apply(extract_discount)
 
+    # Split weight
     def split_weight(weight):
         if pd.isna(weight): return pd.Series([None, None])
         match = re.match(r'^\s*(\d+(?:\.\d+)?)\s*([a-zA-Z]+)\s*$', str(weight).strip())
@@ -98,15 +136,16 @@ def process_csv(file_path):
     df = df[df['quantity'].notnull()]
     df.drop(['parent_id', 'child_id', 'weight', 'mrp', 'discount_text'], axis=1, inplace=True)
 
-    # Save to MongoDB
-    records = df.to_dict(orient='records')
-    collection.insert_many(records)  # Insert records into MongoDB
+    # Prepare the final output
+    final_output = io.StringIO()
+    df.to_csv(final_output, index=False)
 
-    df.to_csv(file_path, index=False)
-    logging.info("Processed and saved to MongoDB: %s", file_path)
-
-def scrape_subcategory(session, category_slug, subcategory_slug):
+    # Upload to Dropbox
+    dropbox_path = f"/ScrapedData/bb-{category_slug}-{subcategory_slug}-page-{page}.csv"
+    upload_file_from_memory(final_output, dropbox_path, dbx)
     
+# Scrape data and save to CSV
+def scrape_subcategory(session, category_slug, subcategory_slug):
     for page in range(1, 17):
         extracted_data = []
         url = base_url.format(slug=subcategory_slug, page=page)
@@ -148,30 +187,21 @@ def scrape_subcategory(session, category_slug, subcategory_slug):
                             discount_text, parent_image_large, category_slug
                         ])
 
-            filename = os.path.join("outputs", f"bb-{category_slug}-{subcategory_slug}-page-{page}.csv")
 
             if extracted_data:
-                with open(filename, mode='w', newline='', encoding='utf-8') as file:
-                    writer = csv.writer(file)
-                    writer.writerow([
-                        'parent_id', 'child_id', 'name', 'weight', 'mrp',
-                        'discount_text', 'imageURL', 'category_slug'
-                    ])
-                    writer.writerows(extracted_data)
-
-                logging.info("Scraped: %s", filename)
-                process_csv(filename)
-                time.sleep(2)
+                process_and_upload_data(extracted_data, category_slug, subcategory_slug, page, dbx)
+                logging.info(f"Scraped and processed data for page {page}")
+                time.sleep(2)  # Respectful delay to avoid overwhelming the server
 
         except Exception as e:
-            logging.error("Error processing %s page %s: %s", subcategory_slug, page, e)
-            break
+            logging.error(f"Error processing {subcategory_slug} page {page}: {e}")
+            break   
 
+# Clean output files
 def clean_output():
-    for file in os.listdir("outputs"):
-        if file.endswith(".csv") or file.endswith(".zip"):
-            os.remove(os.path.join("outputs", file))
+    pass
 
+# Run the scraper stream
 def run_scraper_stream():
     setup_logger()
     clean_output()
@@ -187,17 +217,17 @@ def run_scraper_stream():
 
     try:
         for i, (category_slug, subcategory_slug) in enumerate(zip(category_slugs, subcategory_slugs)):
-            msg = f"Scraping: bb-{category_slug}-{subcategory_slug}-page-1.csv"
+            msg = f"Scraping: bb-{category_slug}-{subcategory_slug}-page-{i}.csv"
             logging.info(msg)
             log_history += msg + "\n"
             yield log_history, (i / total), scraped_files.copy()
 
             scrape_subcategory(session, category_slug, subcategory_slug)
 
-            filename = f"bb-{category_slug}-{subcategory_slug}-page-1.csv"
+            filename = f"bb-{category_slug}-{subcategory_slug}-page-{i}.csv"
             scraped_files.append(filename)
 
-            msg_done = f"✅ Done: bb-{category_slug}-{subcategory_slug}-page-1.csv"
+            msg_done = f"✅ Done: bb-{category_slug}-{subcategory_slug}-page-{i}.csv"
             logging.info(msg_done)
             log_history += msg_done + "\n"
             yield log_history, ((i + 1) / total), scraped_files.copy()
@@ -209,4 +239,3 @@ def run_scraper_stream():
         yield log_history, 1.0, scraped_files.copy()
     finally:
         session.close()
-
