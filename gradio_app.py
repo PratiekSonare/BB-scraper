@@ -38,6 +38,6 @@ with gr.Blocks(title="BigBasket Web Scraper") as demo:
 
     start_btn.click(fn=run_stream_and_display, outputs=[logbox, progress, file_status])
 
-port = int(os.environ.get("PORT", 7860))
-demo.launch(server_name="0.0.0.0", server_port=port)
-
+# port = int(os.environ.get("PORT", 8000))
+# demo.launch(server_name="0.0.0.0", server_port=port)
+demo.launch()

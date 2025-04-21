@@ -25,9 +25,15 @@ import os
 APP_KEY = os.getenv("APP_KEY")
 APP_SECRET = os.getenv("APP_SECRET")
 ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
+DROPBOX_REFRESH_TOKEN = os.getenv("DROPBOX_REFRESH_TOKEN")
 
 # Initialize Dropbox client
-dbx = dropbox.Dropbox(ACCESS_TOKEN)
+dbx = dropbox.Dropbox(
+    oauth2_access_token=None,
+    oauth2_refresh_token=DROPBOX_REFRESH_TOKEN,
+    app_key=APP_KEY,
+    app_secret=APP_SECRET
+)
 
 # Function to upload a file to Dropbox
 def upload_file(file_path, dropbox_path):
