@@ -1,4 +1,4 @@
-import gradio as gr
+import gradio
 import scraper
 import os
 import zipfile

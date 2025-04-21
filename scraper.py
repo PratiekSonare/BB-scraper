@@ -11,8 +11,19 @@ import re
 import os
 import logging
 import io
+from dotenv import load_dotenv
+
+load_dotenv()
 
 base_url = "https://www.bigbasket.com/listing-svc/v2/products?type=pc&slug={slug}&page={page}"
+
+# Add this import at the top of your scraper.py
+from pymongo import MongoClient
+
+# MongoDB connection setup
+mongo_client = MongoClient(os.getenv("MONGO_URI"))
+db = mongo_client[os.getenv("MONGODB_NAME")]
+collection = db[os.getenv("MONGOCOL_NAME")]
 
 def setup_logger(socketio=None):
     logger = logging.getLogger()
@@ -87,8 +98,12 @@ def process_csv(file_path):
     df = df[df['quantity'].notnull()]
     df.drop(['parent_id', 'child_id', 'weight', 'mrp', 'discount_text'], axis=1, inplace=True)
 
+    # Save to MongoDB
+    records = df.to_dict(orient='records')
+    collection.insert_many(records)  # Insert records into MongoDB
+
     df.to_csv(file_path, index=False)
-    logging.info("Processed: %s", file_path)
+    logging.info("Processed and saved to MongoDB: %s", file_path)
 
 def scrape_subcategory(session, category_slug, subcategory_slug):
     
