@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import requests
 import csv
 import brotli
@@ -223,17 +224,18 @@ def run_scraper_stream():
 
     try:
         for i, (category_slug, subcategory_slug) in enumerate(zip(category_slugs, subcategory_slugs)):
-            msg = f"Scraping: bb-{category_slug}-{subcategory_slug}-page-{i}.csv"
+            msg = f"Scraping: bb-{category_slug}-{subcategory_slug}.csv"
             logging.info(msg)
             log_history += msg + "\n"
             yield log_history, (i / total), scraped_files.copy()
 
             scrape_subcategory(session, category_slug, subcategory_slug)
 
-            filename = f"bb-{category_slug}-{subcategory_slug}-page-{i}.csv"
-            scraped_files.append(filename)
+            for page in (1, 17):
+                filename = f"bb-{category_slug}-{subcategory_slug}-page-{page}.csv"
+                scraped_files.append(filename)
 
-            msg_done = f"✅ Done: bb-{category_slug}-{subcategory_slug}-page-{i}.csv"
+            msg_done = f"✅ Done: bb-{category_slug}-{subcategory_slug}.csv"
             logging.info(msg_done)
             log_history += msg_done + "\n"
             yield log_history, ((i + 1) / total), scraped_files.copy()

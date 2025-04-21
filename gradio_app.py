@@ -32,12 +32,11 @@ with gr.Blocks(title="BigBasket Web Scraper") as demo:
             logbox = gr.Textbox(label="Live Logs", lines=25, interactive=False)
         with gr.Column(scale=2):
             file_status = gr.Textbox(label="Scraped CSVs", lines=10, interactive=False)
-            # download = gr.File(label="📥 Download Results (Auto)", visible=True)
             progress = gr.Slider(minimum=0, maximum=1, step=0.01, label="Progress", interactive=False)
 
 
     start_btn.click(fn=run_stream_and_display, outputs=[logbox, progress, file_status])
 
-port = int(os.environ.get("PORT", 8000))
-demo.launch(server_name="0.0.0.0", server_port=port)
-# demo.launch()
+# port = int(os.environ.get("PORT", 8000))
+# demo.launch(server_name="0.0.0.0", server_port=port)
+demo.launch()
