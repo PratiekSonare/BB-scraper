@@ -22,7 +22,7 @@ def run_stream_and_display():
 
 with gr.Blocks(title="BigBasket Web Scraper") as demo:
     gr.Markdown("# 🛒 BigBasket Web Scraper GUI")
-    gr.Markdown("Click **Start Scraping** to begin. Logs will appear below, and progress will update in real-time.\n\nA download link appears when it's done.")
+    gr.Markdown("Click **Start Scraping** to begin. Logs will appear below, and progress will update in real-time.")
 
     with gr.Row():
         with gr.Column(scale=2):
@@ -36,4 +36,6 @@ with gr.Blocks(title="BigBasket Web Scraper") as demo:
 
     start_btn.click(fn=run_stream_and_display, outputs=[logbox, progress, file_status])
 
-demo.launch()
+port = int(os.environ.get("PORT", 7860))
+demo.launch(server_name="0.0.0.0", server_port=port)
+
