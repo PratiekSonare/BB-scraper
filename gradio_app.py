@@ -27,6 +27,11 @@ def run_stream_and_display():
         yield log, progress, updated_list.strip()
 
 
+def stop_scraping():
+    global stop_requested
+    stop_requested = True
+    return "⛔ Scraping stopped by user.", 0, ""
+
 with gr.Blocks(title="BigBasket Web Scraper") as demo:
     gr.Markdown("# 🛒 BigBasket Web Scraper GUI")
     gr.Markdown("Click **Start Scraping** to begin. Logs will appear below, and progress will update in real-time.")
