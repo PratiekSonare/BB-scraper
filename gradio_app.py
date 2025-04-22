@@ -46,7 +46,11 @@ with gr.Blocks(title="BigBasket Web Scraper") as demo:
             progress = gr.Slider(minimum=0, maximum=1, step=0.01, label="Progress", interactive=False)
 
     start_btn.click(fn=run_stream_and_display, outputs=[logbox, progress, file_status])
-    stop_btn.click(fn=stop_scraping, outputs=[logbox, progress, file_status])
+    stop_btn.click(
+    fn=stop_scraping,
+    outputs=[logbox, progress, file_status],
+    js="() => window.location.reload()"
+)
 
 
 
