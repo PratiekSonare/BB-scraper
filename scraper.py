@@ -231,7 +231,7 @@ def run_scraper_stream():
 
             scrape_subcategory(session, category_slug, subcategory_slug)
 
-            for page in (1, 17):
+            for page in range(1, 17):
                 filename = f"bb-{category_slug}-{subcategory_slug}-page-{page}.csv"
                 scraped_files.append(filename)
 
