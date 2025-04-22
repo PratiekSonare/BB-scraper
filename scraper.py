@@ -208,6 +208,11 @@ def scrape_subcategory(session, category_slug, subcategory_slug):
 def clean_output():
     pass
 
+def stop_scraping():
+    global stop_requested
+    stop_requested = True
+    return "⛔ Scraping stopped by user.", 0, ""
+
 # Run the scraper stream
 def run_scraper_stream():
     setup_logger()
