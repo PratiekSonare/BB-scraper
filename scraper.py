@@ -112,7 +112,7 @@ def process_and_upload_data(extracted_data, category_slug, subcategory_slug, pag
     writer = csv.writer(output)
     writer.writerow([
         'parent_id', 'child_id', 'name', 'weight', 'mrp', 
-        'discount_text', 'imageURL', 'category_slug', 'subcategory_slug'
+        'min_discount_text', 'max_discount_text', 'imageURL', 'category', 'category_slug', 'subcategory', 'subcategory_slug'
     ])
     writer.writerows(extracted_data)
 
@@ -129,7 +129,8 @@ def process_and_upload_data(extracted_data, category_slug, subcategory_slug, pag
         return 0
 
     df['price'] = df['mrp']
-    df['discount'] = df['discount_text'].apply(extract_discount)
+    df['discount_lower'] = df['min_discount_text'].apply(extract_discount)
+    df['discount_higher'] = df['max_discount_text'].apply(extract_discount)
 
     # Split weight
     def split_weight(weight):
@@ -141,7 +142,7 @@ def process_and_upload_data(extracted_data, category_slug, subcategory_slug, pag
 
     df[['quantity', 'unit']] = df['weight'].apply(split_weight)
     df = df[df['quantity'].notnull()]
-    df.drop(['parent_id', 'child_id', 'weight', 'mrp', 'discount_text'], axis=1, inplace=True)
+    df.drop(['parent_id', 'child_id', 'weight', 'mrp', 'min_discount_text', 'max_discount_text'], axis=1, inplace=True)
 
     # Prepare the final output
     final_output = io.StringIO()
@@ -174,24 +175,28 @@ def scrape_subcategory(session, category_slug, subcategory_slug):
                     parent_images = product.get('images', [])
                     parent_weight = product.get('w')
                     parent_mrp = product.get('pricing', {}).get('discount', {}).get('mrp')
-                    parent_discount_text = product.get('pricing', {}).get('discount', {}).get('d_text')
+                    parent_min_discount_text = product.get('pricing', {}).get('discount', {}).get('d_text')
+                    parent_max_discount_text = product.get('pricing', {}).get('discount', {}).get('d_text')
                     parent_image_large = parent_images[0].get('l') if parent_images else None
+                    category = product.get('category', {}).get('tlc_name')
                     category_slug = product.get('category', {}).get('tlc_slug')
+                    subcategory = product.get('category', {}).get('mlc_slug')
                     subcategory_slug = product.get('category', {}).get('mlc_slug')
                     extracted_data.append([
                         parent_id, None, parent_desc, parent_weight, parent_mrp,
-                        parent_discount_text, parent_image_large, category_slug, subcategory_slug
+                        parent_min_discount_text, parent_max_discount_text, parent_image_large, category, category_slug, subcategory, subcategory_slug
                     ])
 
                     for child in product.get('children', []):
                         child_id = child.get('id')
                         weight = child.get('w')
                         mrp = child.get('pricing', {}).get('discount', {}).get('mrp')
-                        discount_text = child.get('pricing', {}).get('discount', {}).get('d_text')
+                        min_discount_text = child.get('pricing', {}).get('discount', {}).get('d_text')
+                        max_discount_text = child.get('pricing', {}).get('discount', {}).get('d_text')
 
                         extracted_data.append([
                             parent_id, child_id, parent_desc, weight, mrp,
-                            discount_text, parent_image_large, category_slug, subcategory_slug
+                            min_discount_text, max_discount_text, parent_image_large, category, category_slug, subcategory, subcategory_slug
                         ])
 
 
