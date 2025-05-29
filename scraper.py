@@ -180,7 +180,7 @@ def scrape_subcategory(session, category_slug, subcategory_slug):
                     parent_image_large = parent_images[0].get('l') if parent_images else None
                     category = product.get('category', {}).get('tlc_name')
                     category_slug = product.get('category', {}).get('tlc_slug')
-                    subcategory = product.get('category', {}).get('mlc_slug')
+                    subcategory = product.get('category', {}).get('mlc_name')
                     subcategory_slug = product.get('category', {}).get('mlc_slug')
                     extracted_data.append([
                         parent_id, None, parent_desc, parent_weight, parent_mrp,
