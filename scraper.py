@@ -112,7 +112,7 @@ def process_and_upload_data(extracted_data, category_slug, subcategory_slug, pag
     writer = csv.writer(output)
     writer.writerow([
         'parent_id', 'child_id', 'name', 'weight', 'mrp', 
-        'discount_text', 'imageURL', 'category_slug'
+        'discount_text', 'imageURL', 'category_slug', 'subcategory_slug'
     ])
     writer.writerows(extracted_data)
 
@@ -177,10 +177,10 @@ def scrape_subcategory(session, category_slug, subcategory_slug):
                     parent_discount_text = product.get('pricing', {}).get('discount', {}).get('d_text')
                     parent_image_large = parent_images[0].get('l') if parent_images else None
                     category_slug = product.get('category', {}).get('tlc_slug')
-
+                    subcategory_slug = product.get('category', {}).get('mlc_slug')
                     extracted_data.append([
                         parent_id, None, parent_desc, parent_weight, parent_mrp,
-                        parent_discount_text, parent_image_large, category_slug
+                        parent_discount_text, parent_image_large, category_slug, subcategory_slug
                     ])
 
                     for child in product.get('children', []):
@@ -191,7 +191,7 @@ def scrape_subcategory(session, category_slug, subcategory_slug):
 
                         extracted_data.append([
                             parent_id, child_id, parent_desc, weight, mrp,
-                            discount_text, parent_image_large, category_slug
+                            discount_text, parent_image_large, category_slug, subcategory_slug
                         ])
 
 
